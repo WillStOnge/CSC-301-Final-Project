@@ -1,4 +1,6 @@
 <?php
+include_once "utils/iobject.php";
+
 class Skill extends IObject
 {
     public $skill_id;

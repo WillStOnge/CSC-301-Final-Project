@@ -1,4 +1,6 @@
 <?php
+include_once "utils/iobject.php";
+
 class Tag extends IObject
 {
     public $tag_id;

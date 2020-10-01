@@ -1,4 +1,6 @@
 <?php
+include_once "utils/iobject.php";
+
 class Review extends IObject
 {
     public $review_id;

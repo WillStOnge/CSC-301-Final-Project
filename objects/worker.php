@@ -1,4 +1,6 @@
 <?php
+include_once "utils/iobject.php";
+
 class Worker extends IObject
 {
     public $worker_id;
