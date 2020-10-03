@@ -1,5 +1,32 @@
 <?php
+session_start();
+if (isset($_SESSION['user_id']))
+    header('location: index.php');
 
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['pnum']))
+{
+    include_once "objects/user.php";
+
+    if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+    {
+        if (preg_match('/^[0-9]{10}+$/', $_POST['pnum']))
+        {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $name = htmlspecialchars($_POST['name']);
+
+            $user = User::create($name, $_POST['email'], $password, $_POST['pnum']);
+
+            session_start();
+            $_SESSION["user_id"] = $user->user_id;
+
+            header('location: index.php');
+        }
+        else
+            echo "<p>Invalid phone number (Example: 1234567890)</p>";
+    }
+    else
+        echo "<p>Invalid email address</p>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-us">
@@ -15,7 +42,7 @@
 <body class="dark-mode">
     <div class="container">
         <h1>Register account</h1>
-        <form action="handlers/register.php" method="post">
+        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
             <div class="form-group">
                 <label>Full name</label>
                 <input type="text" class="form-control" name="name" required>

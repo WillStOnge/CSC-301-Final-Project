@@ -80,6 +80,44 @@ class User extends IObject
         return $user;
     }
 
+    static function find($email)
+    {
+        $record = NULL;
+        $user = new User();
+
+        try
+        {
+            $user->conn->beginTransaction();
+            $stmt = $user->conn->prepare("SELECT * FROM user WHERE email = :email");
+            $stmt->bindParam(":email", $email);
+            $stmt->execute();
+            $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($record === false)
+                throw new Exception("Record not found.");
+
+            $user->conn->commit();
+        }
+        catch (Exception $e)
+        {
+            $user->conn->rollBack();
+            http_response_code(500);
+            die('Error 500' . $e->getMessage());
+        }
+
+        $user->user_id = $record["user_id"];
+        $user->name = $record["name"];
+        $user->email = $record["email"];
+        $user->password = $record["password"];
+        $user->type = $record["type"];
+        $user->phone = $record["phone"];
+        $user->banned = $record["banned"];
+        $user->join_date = strtotime($record["join_date"]);
+        $user->last_login = strtotime($record["last_login"]);
+
+        return $user;
+    }
+
     function update()
     {
         try

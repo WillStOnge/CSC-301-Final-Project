@@ -1,5 +1,31 @@
 <?php
+session_start();
+if (isset($_SESSION['user_id']))
+    header('location: index.php');
 
+if (isset($_POST['email']) && isset($_POST['password']))
+{
+    include_once "objects/user.php";
+
+    if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
+    {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $user = User::find($_POST['email']);
+
+        if ($password != $user->password)
+        {
+            $_SESSION["user_id"] = $user->user_id;
+            echo $user->banned;
+
+            header('location: index.php');
+        }
+        else
+            echo "<p>Incorrect email or password</p>";
+    }
+    else
+        echo "<p>Invalid email address</p>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-us">
@@ -15,7 +41,7 @@
 <body class="dark-mode">
     <div class="container">
         <h1>Login</h1>
-        <form action="handlers/login.php" method="post">
+        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
             <div class="form-group">
                 <label>Email address</label>
                 <input type="email" class="form-control" name="email" required>
