@@ -9,13 +9,12 @@ if (isset($_POST['email']) && isset($_POST['password']))
 
     if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
     {
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
         $user = User::find($_POST['email']);
 
-        if ($password != $user->password)
+        if (password_verify($_POST['password'], $user->password))
         {
             $_SESSION["user_id"] = $user->user_id;
+            $_SESSION["user_name"] = $user->name;
             echo $user->banned;
 
             header('location: index.php');
@@ -50,7 +49,7 @@ if (isset($_POST['email']) && isset($_POST['password']))
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn">Submit</button>
         </form>
     </div>
 </body>
