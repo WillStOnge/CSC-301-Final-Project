@@ -12,8 +12,18 @@
 <body class="dark-mode">
     <div class="container">
         <?php
-            session_start();
-            echo $_SESSION['user_id'];
+        session_start();
+
+        if (isset($_SESSION['user_id']))
+            echo '<div class="text-right pt-5">
+                    <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
+                    <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
+                  </div>';
+        else
+            echo '<div class="text-right pt-5">
+                    <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
+                    <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
+                  </div>';
         ?>
     </div>
 </body>
