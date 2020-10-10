@@ -8,12 +8,5 @@ You can submit a link to the public GITHub repository or a ZIP file. The submiss
 
 Your code should:
 
-    work as expected: please, make sure that there are no errors due to incorrect settings or missing files and folders (10 points)
-    use MySQL and PDO (2 points)
-    support CRUD operations for at least 4 different entity types (8 points)
-    contain an admin area, a user area with create/edit/delete features, and a visitor area for public access (10 points)
-    contain a file where I can change the configuration (e.g., database, base paths/urls) to make it work on my computer (2 points)
-    contain authentication features (2 points - mandatory)
-    make use of elements of Object Oriented Programming (2 points)
-    make use of AJAX (2 points)
-    have a somewhat nice user interface (i.e., use Bootstrap) (2 points)
+    Work as expected: please, make sure that there are no errors due to incorrect settings or missing files and folders (10 points)
+    A user area with create/edit/delete features (10 points)

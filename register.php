@@ -11,18 +11,26 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
     {
         if (preg_match('/^[0-9]{10}+$/', $_POST['pnum']))
         {
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $name = htmlspecialchars($_POST['name']);
+            $user = User::find($_POST['email']);
 
-            $user = User::create($name, $_POST['email'], $password, $_POST['pnum']);
+            if (!isset($user))
+            {
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $name = htmlspecialchars($_POST['name']);
 
-            session_start();
-            $_SESSION["user_id"] = $user->user_id;
+                $user = User::create($name, $_POST['email'], $password, $_POST['pnum']);
 
-            header('location: index.php');
+                session_start();
+                $_SESSION["user_id"] = $user->user_id;
+                $_SESSION["user_name"] = $user->user_name;
+
+                header('location: index.php');
+            }
+            else
+                echo "<p>Account already exists with this email</p>";
         }
         else
-            echo "<p>Invalid phone number (Example: 1234567890)</p>";
+            echo "<p>Invalid phone number</p>";
     }
     else
         echo "<p>Invalid email address</p>";

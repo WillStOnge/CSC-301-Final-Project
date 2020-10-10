@@ -13,11 +13,15 @@ if (isset($_POST['email']) && isset($_POST['password']))
 
         if (password_verify($_POST['password'], $user->password))
         {
-            $_SESSION["user_id"] = $user->user_id;
-            $_SESSION["user_name"] = $user->name;
-            echo $user->banned;
+            if (!$user->banned)
+            {
+                $_SESSION["user_id"] = $user->user_id;
+                $_SESSION["user_name"] = $user->name;
 
-            header('location: index.php');
+                header('location: index.php');
+            }
+            else 
+                echo "<p>User is banned</p>";
         }
         else
             echo "<p>Incorrect email or password</p>";

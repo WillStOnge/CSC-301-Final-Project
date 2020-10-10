@@ -10,8 +10,8 @@ class User extends IObject
     public $type;
     public $phone;
     public $join_date;
-    public $last_login;
     public $banned;
+    public $is_admin;
 
     static function create($name, $email, $password, $phone)
     {
@@ -74,8 +74,8 @@ class User extends IObject
         $user->type = $record["type"];
         $user->phone = $record["phone"];
         $user->banned = $record["banned"];
+        $user->is_admin = $record["is_admin"];
         $user->join_date = strtotime($record["join_date"]);
-        $user->last_login = strtotime($record["last_login"]);
 
         return $user;
     }
@@ -102,7 +102,7 @@ class User extends IObject
         {
             $user->conn->rollBack();
             http_response_code(500);
-            die('Error 500' . $e->getMessage());
+            die('Error 500');
         }
 
         $user->user_id = $record["user_id"];
@@ -112,8 +112,8 @@ class User extends IObject
         $user->type = $record["type"];
         $user->phone = $record["phone"];
         $user->banned = $record["banned"];
+        $user->is_admin = $record["is_admin"];
         $user->join_date = strtotime($record["join_date"]);
-        $user->last_login = strtotime($record["last_login"]);
 
         return $user;
     }
@@ -123,15 +123,15 @@ class User extends IObject
         try
         {
             $this->conn->beginTransaction();
-            $stmt = $this->conn->prepare("UPDATE user SET name = :name, email = :email, password = :password, type = :type, phone = :phone, banned = :banned, last_login = FROM_UNIXTIME(:last_login) WHERE user_id = :user_id");
+            $stmt = $this->conn->prepare("UPDATE user SET name = :name, email = :email, password = :password, type = :type, phone = :phone, banned = :banned, is_admin = :is_admin WHERE user_id = :user_id");
             $stmt->bindParam(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindParam(':name', $this->name);
             $stmt->bindParam(':email', $this->email);
             $stmt->bindParam(':type', $this->type);
             $stmt->bindParam(':phone', $this->phone, PDO::PARAM_INT);
-            $stmt->bindParam(':last_login', $this->last_login, PDO::PARAM_INT);
             $stmt->bindParam(':password', $this->password);
             $stmt->bindParam(':banned', $this->banned, PDO::PARAM_BOOL);
+            $stmt->bindParam(':is_admin', $this->is_admin, PDO::PARAM_BOOL);
             $stmt->execute();
 
             $this->conn->commit();

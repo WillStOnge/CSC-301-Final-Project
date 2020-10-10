@@ -1,0 +1,44 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+include_once "../objects/user.php";
+
+session_start();
+
+if (!isset($_GET['user_id']))
+{
+    http_response_code(400);
+    die();
+}
+
+if (!isset($_SESSION['user_id']))
+{
+    echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
+    http_response_code(400);
+    die();
+}
+else
+{
+    $user = User::read($_SESSION['user_id']);
+    if (!$user->is_admin)
+    {
+        echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
+        http_response_code(400);
+        die();
+    }
+        
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
+{
+    $user = User::read($_GET['user_id']);
+    $user->is_admin = $user->is_admin == true ? false : true;
+    $user->update();
+
+    echo json_encode(["newValue" => $user->is_admin]);
+}
+?>
