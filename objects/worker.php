@@ -8,6 +8,7 @@ class Worker extends IObject
     public $avatar_path;
     public $description;
     public $location;
+    public $status;
 
     static function create($user_id, $avatar_path, $description, $location)
     {
@@ -68,6 +69,7 @@ class Worker extends IObject
         $worker->avatar_path = $record["avatar_path"];
         $worker->description = $record["description"];
         $worker->location = $record["location"];
+        $worker->status = $record["status"];
 
         return $worker;
     }
@@ -77,12 +79,13 @@ class Worker extends IObject
         try
         {
             $this->conn->beginTransaction();
-            $stmt = $this->conn->prepare("UPDATE worker SET user_id = :user_id, avatar_path = :avatar_path, description = :description, location = :location WHERE worker_id = :worker_id");
+            $stmt = $this->conn->prepare("UPDATE worker SET user_id = :user_id, avatar_path = :avatar_path, description = :description, location = :location, status = :status WHERE worker_id = :worker_id");
             $stmt->bindParam(':worker_id', $this->worker_id, PDO::PARAM_INT);
             $stmt->bindParam(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindParam(':avatar_path', $this->avatar_path);
             $stmt->bindParam(':description', $this->description);
             $stmt->bindParam(':location', $this->location);
+            $stmt->bindParam(':status', $this->status);
 
             $this->conn->commit();
         }
