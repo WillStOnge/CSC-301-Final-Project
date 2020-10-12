@@ -13,7 +13,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
         {
             $user = User::find($_POST['email']);
 
-            if (!isset($user))
+            if ($user == false)
             {
                 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $name = htmlspecialchars($_POST['name']);

@@ -11,16 +11,13 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/css/halfmoon-variables.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/js/halfmoon.min.js"></script>
     <script>
-    function updateUser(email) 
-    {
-        if (email.length == 0) 
+    function updateUser(email) {
+        if (email.length == 0)
             return;
-        else 
-        {
+        else {
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) 
-                {
+                if (this.readyState == 4 && this.status == 200) {
                     var response = JSON.parse(this.response)
 
                     var join_date = new Date(response.join_date * 1000)
@@ -40,20 +37,17 @@ session_start();
         }
     }
 
-    function admin()
-    {
+    function admin() {
         var user_id = document.getElementById('user_id').innerHTML;
 
-        if (user_id.length == 0) 
+        if (user_id.length == 0)
             return;
-        else 
-        {
+        else {
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) 
-                {
+                if (this.readyState == 4 && this.status == 200) {
                     var response = JSON.parse(this.response)
-                    
+
                     document.getElementById("is_admin").innerHTML = response.newValue;
                 }
             };
@@ -62,20 +56,17 @@ session_start();
         }
     }
 
-    function ban()
-    {
+    function ban() {
         var user_id = document.getElementById('user_id').innerHTML;
 
-        if (user_id.length == 0) 
+        if (user_id.length == 0)
             return;
-        else 
-        {
+        else {
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) 
-                {
+                if (this.readyState == 4 && this.status == 200) {
                     var response = JSON.parse(this.response)
-                    
+
                     document.getElementById("banned").innerHTML = response.newValue;
                 }
             };
@@ -84,30 +75,107 @@ session_start();
         }
     }
 
-    function updateWorkers()
-    {
+    function updateWorkers() {
         var request = new XMLHttpRequest();
+
         request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) 
-            {
+            if (this.readyState == 4 && this.status == 200) {
                 var response = JSON.parse(this.response)
+                var queue = document.getElementById('queue')
+                queue.innerHTML = ''
 
-                for (worker in response)
-                {
-                    var queue = document.getElementById('queue')
+                var row = document.createElement('tr')
+                var header1 = document.createElement('th')
+                var header2 = document.createElement('th')
+                var header3 = document.createElement('th')
+                var header4 = document.createElement('th')
 
+                header1.innerText = 'Worker Id'
+                header2.innerText = 'Name'
+                header3.innerText = 'Document'
+                header4.innerText = 'Buttons'
+
+                queue.appendChild(row)
+                row.appendChild(header1)
+                row.appendChild(header2)
+                row.appendChild(header3)
+                row.appendChild(header4)
+
+                response.forEach((worker) => {
                     var row = document.createElement('tr')
-                    var data = document.createElement('td')
 
-                    data.innerText=worker
+                    var dataId = document.createElement('td')
+                    dataId.innerText = worker.worker_id
+
+                    var dataName = document.createElement('td')
+                    dataName.innerText = worker.name
+
+                    var dataDoc = document.createElement('td')
+                    var anchor = document.createElement('a')
+                    anchor.setAttribute('href', 'certifications/' + worker.file_name)
+                    anchor.setAttribute('target', 'about:blank')
+                    anchor.innerText = worker.file_name
+
+                    var buttons = document.createElement('td')
+                    var a1 = document.createElement('a')
+                    var a2 = document.createElement('a')
+                    var button1 = document.createElement('button')
+                    var button2 = document.createElement('button')
+
+                    a1.setAttribute('onclick', 'approve(' + worker.worker_id + ')')
+                    a2.setAttribute('onclick', 'deny(' + worker.worker_id + ')')
+                    button1.setAttribute('type', 'button')
+                    button1.setAttribute('class', 'btn btn-sm btn-rounded')
+                    button1.innerText = 'Approve'
+                    button2.setAttribute('type', 'button')
+                    button2.setAttribute('class', 'btn btn-sm btn-danger btn-rounded')
+                    button2.innerText = 'Deny'
 
                     queue.appendChild(row)
-                    row.appendChild(data)
-                }
+                    row.appendChild(dataId)
+                    row.appendChild(dataName)
+                    row.appendChild(dataDoc)
+                    row.appendChild(buttons)
+                    dataDoc.appendChild(anchor);
+                    buttons.appendChild(a1)
+                    buttons.appendChild(a2)
+                    a1.appendChild(button1)
+                    a2.appendChild(button2)
+                })
             }
         };
         request.open("GET", "api/approval.php", true);
         request.send();
+    }
+
+    function deny(worker_id) {
+        if (worker_id.length == 0)
+            return;
+        else {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    updateWorkers()
+                }
+            };
+            request.open("POST", "api/denyWorker.php?worker_id=" + worker_id, true);
+            request.send();
+        }
+    }
+
+    function approve(worker_id) {
+        if (worker_id.length == 0)
+            return;
+        else {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    updateWorkers()
+                }
+            };
+            request.open("POST", "api/approveWorker.php?worker_id=" + worker_id, true);
+            request.send();
+        }
     }
     </script>
 </head>
@@ -127,7 +195,8 @@ session_start();
         }
         ?>
         <div class="text-right pt-5">
-            <small class="align-text-top">Welcome back, <?php echo str_replace("%\n%", '', $_SESSION['user_name']) ?></small>
+            <small class="align-text-top">Welcome back,
+                <?php echo str_replace("%\n%", '', $_SESSION['user_name']) ?></small>
             <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
         </div>
 
@@ -136,13 +205,9 @@ session_start();
 
             <table class="table table-hover table-inner-bordered">
                 <tbody id="queue">
-                    <tr>
-                        <th>Worker Id</th>
-                        <th>Name</th>
-                        <th>Document</th>
-                        <th>Buttons</th>
-                    </tr>
-                    <script>updateWorkers()</script>
+                    <script>
+                    updateWorkers()
+                    </script>
                 </tbody>
             </table>
         </div>
@@ -191,7 +256,7 @@ session_start();
                     </tbody>
                 </table>
             </div>
-            <br/>
+            <br />
             <div class="text-center">
                 <button type="button" class="btn btn-sm" onclick="admin()">Toggle Admin</button>
                 <button type="button" class="btn btn-sm btn-red" onclick="ban()">Toggle Ban</button>

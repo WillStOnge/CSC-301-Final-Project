@@ -94,7 +94,7 @@ class User extends IObject
             $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($record === false)
-                throw new Exception("Record not found.");
+                return false;
 
             $user->conn->commit();
         }
