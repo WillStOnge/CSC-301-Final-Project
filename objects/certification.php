@@ -6,9 +6,8 @@ class Certification extends IObject
     public $certification_id;
     public $worker_id;
     public $file_name;
-    public $validated;
 
-    static function create($worker_id, $file_name, $validated)
+    static function create($worker_id, $file_name)
     {
         $certification = new Certification();
 
@@ -16,10 +15,9 @@ class Certification extends IObject
         try
         {
             $certification->conn->beginTransaction();
-            $stmt = $certification->conn->prepare("INSERT INTO certification (worker_id, file_name, validated) VALUES (:worker_id, :file_name, :validated)");
+            $stmt = $certification->conn->prepare("INSERT INTO certification (worker_id, file_name) VALUES (:worker_id, :file_name)");
             $stmt->bindParam(':worker_id', $worker_id, PDO::PARAM_INT);
             $stmt->bindParam(':file_name', $file_name);
-            $stmt->bindParam(':validated', $validated);
             $stmt->execute();
 
             $certification_id = $certification->conn->lastInsertId(); 
@@ -64,7 +62,6 @@ class Certification extends IObject
         $certification->certification_id = $record["certification_id"];
         $certification->worker_id = $record["worker_id"];
         $certification->file_name = $record["file_name"];
-        $certification->validated = $record["validated"];
 
         return $certification;
     }
@@ -74,11 +71,10 @@ class Certification extends IObject
         try
         {
             $this->conn->beginTransaction();
-            $stmt = $this->conn->prepare("UPDATE certification SET worker_id = :worker_id, file_name = :file_name, validated = :validated WHERE certification_id = :certification_id");
+            $stmt = $this->conn->prepare("UPDATE certification SET worker_id = :worker_id, file_name = :file_name WHERE certification_id = :certification_id");
             $stmt->bindParam(':certification_id', $this->certification_id, PDO::PARAM_INT);
             $stmt->bindParam(':worker_id', $this->worker_id, PDO::PARAM_INT);
             $stmt->bindParam(':file_name', $this->file_name);
-            $stmt->bindParam(':validated', $this->validated);
             $stmt->execute();
 
             $this->conn->commit();
