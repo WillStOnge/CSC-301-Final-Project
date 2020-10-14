@@ -5,12 +5,12 @@ class Worker extends IObject
 {
     public $worker_id;
     public $user_id;
-    public $avatar_path;
+    public $avatar_name;
     public $description;
     public $location;
     public $status;
 
-    static function create($user_id, $avatar_path, $description, $location)
+    static function create($user_id, $avatar_name, $description, $location)
     {
         $worker = new Worker();
 
@@ -18,9 +18,9 @@ class Worker extends IObject
         try
         {
             $worker->conn->beginTransaction();
-            $stmt = $worker->conn->prepare("INSERT INTO worker (user_id, avatar_path, description, location) VALUES (:user_id, :avatar_path, :description, :location)");
+            $stmt = $worker->conn->prepare("INSERT INTO worker (user_id, avatar_name, description, location) VALUES (:user_id, :avatar_name, :description, :location)");
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-            $stmt->bindParam(':avatar_path', $avatar_path);
+            $stmt->bindParam(':avatar_name', $avatar_name);
             $stmt->bindParam(':description', $description);
             $stmt->bindParam(':location', $location);
             $stmt->execute();
@@ -61,12 +61,12 @@ class Worker extends IObject
         {
             $worker->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('Unable to find worker with id ' . $worker_id);
         }
 
         $worker->worker_id = $record["worker_id"];
         $worker->user_id = $record["user_id"];
-        $worker->avatar_path = $record["avatar_path"];
+        $worker->avatar_name = $record["avatar_name"];
         $worker->description = $record["description"];
         $worker->location = $record["location"];
         $worker->status = $record["status"];
@@ -79,10 +79,10 @@ class Worker extends IObject
         try
         {
             $this->conn->beginTransaction();
-            $stmt = $this->conn->prepare("UPDATE worker SET user_id = :user_id, avatar_path = :avatar_path, description = :description, location = :location, status = :status WHERE worker_id = :worker_id");
+            $stmt = $this->conn->prepare("UPDATE worker SET user_id = :user_id, avatar_name = :avatar_name, description = :description, location = :location, status = :status WHERE worker_id = :worker_id");
             $stmt->bindParam(':worker_id', $this->worker_id, PDO::PARAM_INT);
             $stmt->bindParam(':user_id', $this->user_id, PDO::PARAM_INT);
-            $stmt->bindParam(':avatar_path', $this->avatar_path);
+            $stmt->bindParam(':avatar_name', $this->avatar_name);
             $stmt->bindParam(':description', $this->description);
             $stmt->bindParam(':location', $this->location);
             $stmt->bindParam(':status', $this->status);

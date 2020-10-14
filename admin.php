@@ -6,7 +6,6 @@ session_start();
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Home page</title>
     <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/css/halfmoon-variables.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/js/halfmoon.min.js"></script>
@@ -112,7 +111,7 @@ session_start();
 
                     var dataDoc = document.createElement('td')
                     var anchor = document.createElement('a')
-                    anchor.setAttribute('href', 'certifications/' + worker.file_name)
+                    anchor.setAttribute('href', 'assets/certifications/' + worker.file_name)
                     anchor.setAttribute('target', 'about:blank')
                     anchor.innerText = worker.file_name
 
