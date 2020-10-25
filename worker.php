@@ -25,9 +25,12 @@
                         div.setAttribute('class', 'card')
                         header.setAttribute('class', 'card-title')
 
-                        header.textContent = review.name + " - " + review.star_rating + " stars"
+                        header.textContent = review.name + " - "
                         created_on.textContent = review.create_date
                         body.textContent = review.description
+
+                        for (var i = 0; i < review.star_rating; i++)
+                            header.innerHTML += "&#11088;"
 
                         reviews.appendChild(div)
                         div.appendChild(header)
