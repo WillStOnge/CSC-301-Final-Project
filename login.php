@@ -15,8 +15,29 @@ if (isset($_POST['email']) && isset($_POST['password']))
         {
             if (!$user->banned)
             {
+                $db = new Database();
+                $worker;
+
+                try
+                {
+                    $db->conn->beginTransaction();
+                    $stmt = $db->conn->prepare("SELECT worker_id FROM worker WHERE user_id = :user_id");
+                    $stmt->bindParam(':user_id', $user->user_id, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $db->conn->commit();
+                    $worker = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch (Exception $e)
+                {
+                    $db->conn->rollBack();
+                    http_response_code(500);
+                    die('Error 500');
+                }
+
                 $_SESSION["user_id"] = $user->user_id;
                 $_SESSION["user_name"] = $user->name;
+                if ($worker !== false)
+                    $_SESSION["worker_id"] = $worker["worker_id"];
 
                 header('location: index.php');
             }
