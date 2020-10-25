@@ -199,66 +199,72 @@ session_start();
             <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
         </div>
 
-        <div class="card">
-            <h3 class="card-title text-center">Worker Approval Queue</h3>
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="card">
+                    <h3 class="card-title text-center">Worker Approval Queue</h3>
 
-            <table class="table table-hover table-inner-bordered">
-                <tbody id="queue">
-                    <script>
-                    updateWorkers()
-                    </script>
-                </tbody>
-            </table>
-        </div>
+                    <table class="table table-hover table-inner-bordered">
+                        <tbody id="queue">
+                            <script>
+                            updateWorkers()
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3 class="card-title text-center">User Administration</h3>
-            <div class="form-group" action="">
-                <label>User Email</label>
-                <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)">
-            </div>
-            <div id="userData">
-                <table class="table table-hover table-inner-bordered">
-                    <tbody>
-                        <tr>
-                            <th>User Id</th>
-                            <td id="user_id"></td>
-                        </tr>
-                        <tr>
-                            <th>Name</th>
-                            <td id="name"></td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td id="email"></td>
-                        </tr>
-                        <tr>
-                            <th>Type</th>
-                            <td id="type"></td>
-                        </tr>
-                        <tr>
-                            <th>Phone</th>
-                            <td id="phone"></td>
-                        </tr>
-                        <tr>
-                            <th>Join Date</th>
-                            <td id="join_date"></td>
-                        </tr>
-                        <tr>
-                            <th>Banned</th>
-                            <td id="banned"></td>
-                        </tr>
-                        <tr>
-                            <th>Admin</th>
-                            <td id="is_admin"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <br />
-            <div class="text-center">
-                <button type="button" class="btn btn-sm" onclick="admin()">Toggle Admin</button>
-                <button type="button" class="btn btn-sm btn-red" onclick="ban()">Toggle Ban</button>
+            <div class="col-sm-5">
+                <div class="card">
+                    <h3 class="card-title text-center">User Administration</h3>
+                    <div class="form-group" action="">
+                        <label>User Email</label>
+                        <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)">
+                    </div>
+                    <div id="userData">
+                        <table class="table table-hover table-inner-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>User Id</th>
+                                    <td id="user_id"></td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td id="name"></td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td id="email"></td>
+                                </tr>
+                                <tr>
+                                    <th>Type</th>
+                                    <td id="type"></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td id="phone"></td>
+                                </tr>
+                                <tr>
+                                    <th>Join Date</th>
+                                    <td id="join_date"></td>
+                                </tr>
+                                <tr>
+                                    <th>Banned</th>
+                                    <td id="banned"></td>
+                                </tr>
+                                <tr>
+                                    <th>Admin</th>
+                                    <td id="is_admin"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-sm" onclick="admin()">Toggle Admin</button>
+                        <button type="button" class="btn btn-sm btn-red" onclick="ban()">Toggle Ban</button>
+                    </div>
+                </div>
             </div>
         </div>
 
