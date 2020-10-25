@@ -22,10 +22,7 @@
                     <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>';
             ?>
         </div>
-        <a href="search.php"><button type="button" class="btn btn-sm">Search for contractors</button></a>
         <a href="worker.php?id=10"><button type="button" class="btn btn-sm">Test worker page</button></a>
-        <br/>
-        <br/>
         <a href="admin.php"><button type="button" class="btn btn-sm">Admin page</button></a>
     </div>
 </body>
