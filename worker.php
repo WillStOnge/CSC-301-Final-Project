@@ -88,9 +88,6 @@
                 <a href="mailto:<?php echo $user->email; ?>"><button type="button" class="btn btn-sm">Email</button></a>
                 <a href="tel:<?php echo $user->phone; ?>"><button type="button" class="btn btn-sm">Call</button></a>
             </div>
-        </div>
-        <div class="card">
-            <h3 class="card-title">Description</h3>
             <?php
             echo '<p class="text-justify">' . $worker->description . '</p>';
             ?>
