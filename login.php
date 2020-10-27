@@ -36,8 +36,7 @@ if (isset($_POST['email']) && isset($_POST['password']))
 
                 $_SESSION["user_id"] = $user->user_id;
                 $_SESSION["user_name"] = $user->name;
-                if ($worker !== false)
-                    $_SESSION["worker_id"] = $worker["worker_id"];
+                $_SESSION["worker_id"] = $worker[0]["worker_id"];
 
                 header('location: index.php');
             }

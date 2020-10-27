@@ -1,6 +1,5 @@
 <?php
 session_start();
-// TODO replace 10 with $_SESSION['worker_id'] for production
 ?>
 <!DOCTYPE html>
 <html lang="en-us">
@@ -42,7 +41,7 @@ session_start();
         if (worker_id.length == 0)
             return;
         else {
-            var skill_name = document.getElementById('skill_name').innerText;
+            var skill_name = document.getElementById('skill_name').value;
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -58,7 +57,7 @@ session_start();
         if (worker_id.length == 0)
             return;
         else {
-            var skill_name = document.getElementById('skill_name').innerText;
+            var skill_name = document.getElementById('skill_name').value;
             var request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -82,7 +81,7 @@ session_start();
         else
         {
             $user = User::read($_SESSION['user_id']);
-            if (!$user->is_admin && !isset($_SESSION['worker_id'])) // TODO remove admin check for production
+            if (!isset($_SESSION['worker_id']))
                 die('<p>You must be logged in as a worker to use this page.</p>');
         }
         ?>
@@ -95,7 +94,7 @@ session_start();
             <div class="col-sm-6">
                 <div class="card" id="skills">
                     <script>
-                    updateSkills(<?php echo 10; ?>) <!-- TODO -->
+                    updateSkills(<?php echo $_SESSION['worker_id']; ?>)
                     </script>
                 </div>
             </div>
@@ -106,8 +105,8 @@ session_start();
                         <label>Skill Name</label>
                         <input type="text" class="form-control" id="skill_name">
                     </div>
-                    <a onclick="addSkill(<?php echo 10; ?>)"><button type="button" class="btn btn-sm">Add Skill</button></a>        <!-- TODO -->
-                    <a onclick="removeSkill(<?php echo 10; ?>)"><button type="button" class="btn btn-sm">Remove Skill</button></a>  <!-- TODO -->
+                    <a onclick="addSkill(<?php echo $_SESSION['worker_id']; ?>)"><button type="button" class="btn btn-sm">Add Skill</button></a>
+                    <a onclick="removeSkill(<?php echo $_SESSION['worker_id']; ?>)"><button type="button" class="btn btn-sm">Remove Skill</button></a>
                 </div>
             </div>
         </div>
