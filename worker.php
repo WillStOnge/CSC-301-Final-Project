@@ -24,6 +24,7 @@
 
                         div.setAttribute('class', 'card')
                         header.setAttribute('class', 'card-title')
+                        body.setAttribute('class', 'text-justify')
 
                         header.textContent = review.name + " - "
                         created_on.textContent = review.create_date
@@ -47,7 +48,7 @@
 </head>
 
 <body class="dark-mode">
-    <div class="container-fluid">
+    <div class="container">
         <?php
             session_start();
 
@@ -83,15 +84,20 @@
             <h3 class="card-title"><?php echo ucwords($user->name) . '\'s Profile' ?></h3>
             <img src="<?php echo 'assets/avatars/' . $worker->avatar_name ?>" class="img-fluid rounded-circle"
                 style="object-fit:cover; width:230px; height:230px;" />
+            <div class="text-right pt-5">
+                <a href="mailto:<?php echo $user->email; ?>"><button type="button" class="btn btn-sm">Email</button></a>
+                <a href="tel:<?php echo $user->phone; ?>"><button type="button" class="btn btn-sm">Call</button></a>
+            </div>
         </div>
         <div class="card">
             <h3 class="card-title">Description</h3>
             <?php
-            echo '<p>' . $worker->description . '</p>';
+            echo '<p class="text-justify">' . $worker->description . '</p>';
             ?>
         </div>
         <div id="reviews">
             <h3 class="card-title text-center">Worker Reviews</h3>
+            
             <script>
             getReviews(<?php echo $worker->worker_id; ?>)
             </script>
