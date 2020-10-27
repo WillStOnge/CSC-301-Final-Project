@@ -24,6 +24,7 @@
         </div>
         <a href="worker.php?id=10"><button type="button" class="btn btn-sm">Test worker page</button></a>
         <a href="admin.php"><button type="button" class="btn btn-sm">Admin page</button></a>
+        <a href="skills.php"><button type="button" class="btn btn-sm">Skills page</button></a>
     </div>
 </body>
 
