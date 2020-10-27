@@ -9,4 +9,3 @@ You can submit a link to the public GITHub repository or a ZIP file. The submiss
 Your code should:
 
     Work as expected: please, make sure that there are no errors due to incorrect settings or missing files and folders (10 points)
-    A user area with create/edit/delete features (10 points)
