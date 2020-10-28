@@ -26,7 +26,7 @@
                         outerdiv.setAttribute('class', 'col-sm-6')
                         div.setAttribute('class', 'card')
                         header.setAttribute('class', 'card-title')
-                        body.setAttribute('class', 'text-justify')
+                        body.setAttribute('class', 'text-break w-450') // Fix review text length
 
                         header.textContent = review.name + " - "
                         created_on.textContent = review.create_date
@@ -34,7 +34,6 @@
 
                         for (var i = 0; i < review.star_rating; i++)
                             header.innerHTML += "&#11088;"
-
                         
                         reviews.appendChild(outerdiv)
                         outerdiv.appendChild(div)
@@ -84,12 +83,14 @@
         
             echo '<title>' . $user->name . '</title>';
         ?>
+        <!-- TODO: Add edit skills button if same worker -->
         <div class="card">
             <div class="row">
                 <div class="col-sm-10">
                     <u>
                         <h3 class="card-title"><?php echo ucwords($user->name) . ' - ' . $worker->location; ?></h3>
                     </u>
+                    <!-- TODO: Average Star Rating -->
                     <?php
                     echo '<p class="text-justify">' . $worker->description . '</p>';
                     ?>
@@ -105,6 +106,7 @@
             </div>
         </div>
         <h3 class="card-title text-center">Reviews</h3>
+        <!-- TODO: Add new review button -->
         <div id="reviews" class="row">
             <script>
             getReviews(<?php echo $worker->worker_id; ?>)
