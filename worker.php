@@ -17,11 +17,13 @@
                     var reviews = document.getElementById('reviews')
 
                     response.forEach((review) => {
+                        var outerdiv = document.createElement('div')
                         var div = document.createElement('div')
                         var header = document.createElement('h5')
                         var created_on = document.createElement('p')
                         var body = document.createElement('p')
 
+                        outerdiv.setAttribute('class', 'col-sm-6')
                         div.setAttribute('class', 'card')
                         header.setAttribute('class', 'card-title')
                         body.setAttribute('class', 'text-justify')
@@ -33,7 +35,9 @@
                         for (var i = 0; i < review.star_rating; i++)
                             header.innerHTML += "&#11088;"
 
-                        reviews.appendChild(div)
+                        
+                        reviews.appendChild(outerdiv)
+                        outerdiv.appendChild(div)
                         div.appendChild(header)
                         div.appendChild(created_on)
                         div.appendChild(body)
@@ -81,20 +85,27 @@
             echo '<title>' . $user->name . '</title>';
         ?>
         <div class="card">
-            <h3 class="card-title"><?php echo ucwords($user->name) . '\'s Profile' ?></h3>
-            <img src="<?php echo 'assets/avatars/' . $worker->avatar_name ?>" class="img-fluid rounded-circle"
-                style="object-fit:cover; width:230px; height:230px;" />
-            <div class="text-right pt-5">
-                <a href="mailto:<?php echo $user->email; ?>"><button type="button" class="btn btn-sm">Email</button></a>
-                <a href="tel:<?php echo $user->phone; ?>"><button type="button" class="btn btn-sm">Call</button></a>
+            <div class="row">
+                <div class="col-sm-10">
+                    <u>
+                        <h3 class="card-title"><?php echo ucwords($user->name) . ' - ' . $worker->location; ?></h3>
+                    </u>
+                    <?php
+                    echo '<p class="text-justify">' . $worker->description . '</p>';
+                    ?>
+                </div>
+                <div class="col-sm-2">
+                    <div class="text-right pt-5">
+                        <a href="mailto:<?php echo $user->email; ?>"><button type="button"
+                                class="btn btn-sm">Email</button></a>
+                        <a href="tel:<?php echo $user->phone; ?>"><button type="button"
+                                class="btn btn-sm">Call</button></a>
+                    </div>
+                </div>
             </div>
-            <?php
-            echo '<p class="text-justify">' . $worker->description . '</p>';
-            ?>
         </div>
-        <div id="reviews">
-            <h3 class="card-title text-center">Worker Reviews</h3>
-            
+        <h3 class="card-title text-center">Reviews</h3>
+        <div id="reviews" class="row">
             <script>
             getReviews(<?php echo $worker->worker_id; ?>)
             </script>
