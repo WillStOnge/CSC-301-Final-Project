@@ -51,6 +51,8 @@
                     $user->update();
                     $worker->update();
 
+                    $_SESSION['user_name'] = $_POST['name'];
+
                     header("location: worker.php?id=" . $worker->worker_id);
                 }
                 else 

@@ -12,19 +12,25 @@
         <?php
             session_start();
 
+            echo '<div class="row">';
+
+            echo '<div class="col-sm-6 align-text-top pt-5"><a href="index.php"><button type="button" class="btn btn-sm">Home</button></a></div>';
+
             if (isset($_SESSION['user_id']))
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
                         <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
                     </div>';
             else
             {
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                         <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                     </div>';
                 die('<p>Must be signed in to perform this action</p>');
             }
+
+            echo '</div>';
 
             if (!isset($_GET['id']))
                 die("<p class='text-center'>Invalid worker id</p>");
@@ -63,11 +69,11 @@
         <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
             <div class="form-group">
                 <label>Star Rating</label>
-                <input type="number" class="form-control" name="star_rating" min="1" max="5" value="3" required>
+                <input type="number" class="form-control" name="star_rating" min="1" max="5" value="<?php echo isset($_POST['star_rating']) ? $_POST['star_rating'] : 3 ?>" required>
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea class="form-control" placeholder="Enter your review here (minimum of 100 words)." name="description"></textarea>
+                <textarea class="form-control" placeholder="Enter your review here (minimum of 100 words)." name="description"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
             </div>
             <button type="submit" class="btn">Submit</button>
         </form>

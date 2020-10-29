@@ -26,7 +26,6 @@
                         outerdiv.setAttribute('class', 'col-sm-6')
                         div.setAttribute('class', 'card')
                         header.setAttribute('class', 'card-title')
-                        body.setAttribute('class', 'text-break w-450') // Fix review text length
 
                         header.textContent = review.name + " - "
                         created_on.textContent = review.create_date
@@ -34,7 +33,7 @@
 
                         for (var i = 0; i < review.star_rating; i++)
                             header.innerHTML += "&#11088;"
-                        
+
                         reviews.appendChild(outerdiv)
                         outerdiv.appendChild(div)
                         div.appendChild(header)
@@ -55,25 +54,32 @@
         <?php
             session_start();
 
+            echo '<div class="row">';
+
+            echo '<div class="col-sm-6 align-text-top pt-5"><a href="index.php"><button type="button" class="btn btn-sm">Home</button></a></div>';
+
             if (isset($_SESSION['user_id']))
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
                         <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
                     </div>';
             else
             {
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                         <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                     </div>';
-                die('<p>Must be signed into perform this action</p>');
+                die('<p>Must be signed in to perform this action</p>');
             }
+
+            echo '</div>';
 
             if (!isset($_GET['id']))
                 die("<p class='text-center'>Invalid worker id</p>");
 
             include_once "objects/worker.php";
             include_once "objects/user.php";
+            include_once "objects/utils/database.php";
             
             $worker = Worker::read($_GET['id']);
             $user = User::read($worker->user_id);
@@ -87,11 +93,33 @@
         <div class="card">
             <div class="row">
                 <div class="col-sm-10">
-                    <u>
-                        <h3 class="card-title"><?php echo ucwords($user->name) . ' - ' . $worker->location; ?></h3>
-                    </u>
-                    <!-- TODO: Average Star Rating -->
                     <?php
+                    $db = new Database();
+
+                    try
+                    {
+                        $db->conn->beginTransaction();
+                        $stmt = $db->conn->prepare("SELECT AVG(star_rating) FROM review WHERE worker_id = :worker_id");
+                        $stmt->bindParam(":worker_id", $worker->worker_id, PDO::PARAM_INT);
+                        $stmt->execute();
+                        $rating = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        $db->conn->commit();
+                    }
+                    catch (Exception $e)
+                    {
+                        $db->conn->rollBack();
+                        http_response_code(500);
+                        die('Error 500');
+                    }
+
+                    $str = "";
+
+                    for ($i = 0; $i < floor($rating[0]["AVG(star_rating)"]); $i++)
+                        $str .= "&#11088;";
+
+                    echo '<u><h3 class="card-title">' . ucwords($user->name) . ' - ' . $worker->location . '</u> - ' . $str . '</h3>';
+
                     echo '<p class="text-justify">' . $worker->description . '</p>';
                     ?>
                 </div>
