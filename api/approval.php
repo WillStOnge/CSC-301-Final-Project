@@ -10,22 +10,11 @@ include_once "../objects/user.php";
 
 session_start();
 
-if (!isset($_SESSION['user_id']))
+if (!isset($_SESSION['user_id']) || !(isset($_SESSION['is_admin']) && $_SESSION['is_admin']))
 {
     echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
     http_response_code(400);
     die();
-}
-else
-{
-    $user = User::read($_SESSION['user_id']);
-    if (!$user->is_admin)
-    {
-        echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
-        http_response_code(400);
-        die();
-    }
-        
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") 
