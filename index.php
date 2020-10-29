@@ -25,7 +25,6 @@
                         <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                         <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                     </div>';
-                die('<p>Must be signed in to perform this action</p>');
             }
             ?>
         </div>
