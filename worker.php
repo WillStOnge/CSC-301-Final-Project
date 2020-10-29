@@ -89,10 +89,9 @@
         
             echo '<title>' . $user->name . '</title>';
         ?>
-        <!-- TODO: Add edit skills button if same worker -->
         <div class="card">
             <div class="row">
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <?php
                     $db = new Database();
 
@@ -123,12 +122,16 @@
                     echo '<p class="text-justify">' . $worker->description . '</p>';
                     ?>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <div class="text-right pt-5">
                         <a href="mailto:<?php echo $user->email; ?>"><button type="button"
                                 class="btn btn-sm">Email</button></a>
                         <a href="tel:<?php echo $user->phone; ?>"><button type="button"
                                 class="btn btn-sm">Call</button></a>
+                        <?php
+                        if ($_SESSION['worker_id'] == $worker->worker_id)
+                            echo '<a href="workerEdit.php"><button type="button" class="btn btn-sm">Edit Profile</button></a>';
+                        ?>
                     </div>
                 </div>
             </div>
