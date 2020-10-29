@@ -14,22 +14,30 @@
             <?php
             session_start();
 
+            echo '<div class="row"><div class="col-sm-6 align-text-top pt-5">';
+
+            if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'])
+                echo '<a href="admin.php"><button type="button" class="btn btn-sm">Admin Page</button></a>';
+
+            echo '</div>';
+
             if (isset($_SESSION['user_id']))
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
                         <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
                     </div>';
             else
             {
-                echo '<div class="text-right pt-5">
+                echo '<div class="col-sm-6 text-right pt-5">
                         <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                         <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                     </div>';
             }
+
+            echo '</div>';
             ?>
         </div>
         <a href="worker.php?id=10"><button type="button" class="btn btn-sm">Test worker page</button></a>
-        <a href="admin.php"><button type="button" class="btn btn-sm">Admin page</button></a>
         <a href="skills.php"><button type="button" class="btn btn-sm">Skills page</button></a>
     </div>
 </body>
