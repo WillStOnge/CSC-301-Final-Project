@@ -137,7 +137,7 @@
             </div>
         </div>
         <h3 class="card-title text-center">Reviews</h3>
-        <!-- TODO: Add new review button -->
+        <a href="addReview.php?id=<?php echo $worker->worker_id; ?>"><button type="button"class="btn btn-sm">New Review</button></a>
         <div id="reviews" class="row">
             <script>
             getReviews(<?php echo $worker->worker_id; ?>)
