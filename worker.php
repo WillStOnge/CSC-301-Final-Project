@@ -57,10 +57,18 @@
             echo '<div class="row">';
 
             echo '<div class="col-sm-6 align-text-top pt-5"><a href="index.php"><button type="button" class="btn btn-sm">Home</button></a></div>';
-            echo '<div class="col-sm-6 text-right pt-5">
-                    <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
-                    <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
-                </div>';
+
+            if (isset($_SESSION['user_id']))
+                echo '<div class="col-sm-6 text-right pt-5">
+                        <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
+                        <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
+                    </div>';
+            else
+                echo '<div class="col-sm-6 text-right pt-5">
+                        <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
+                        <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
+                    </div>';
+
             echo '</div>';
 
             if (!isset($_GET['id']))
@@ -114,7 +122,7 @@
                 <div class="col-sm-4">
                     <div class="text-right pt-5">
                         <?php
-                        if ($_SESSION['worker_id'] == $worker->worker_id)
+                        if (isset($_SESSION['worker_id']) && $_SESSION['worker_id'] == $worker->worker_id)
                         {
                             echo '<a href="workerEdit.php"><button type="button" class="btn btn-sm mr-5">Edit Profile</button></a>';
                             echo '<a href="skills.php"><button type="button" class="btn btn-sm">Edit Skills</button></a>';
@@ -132,7 +140,7 @@
         </div>
         <h3 class="card-title text-center">Reviews</h3>
         <?php
-        if ($_SESSION['worker_id'] != $worker->worker_id)
+        if (!isset($_SESSION['worker_id']) || $_SESSION['worker_id'] != $worker->worker_id)
             echo '<a href="addReview.php?id=' . $worker->worker_id . '"><button type="button"class="btn btn-sm">New Review</button></a>';
         ?>
         <div id="reviews" class="row">
