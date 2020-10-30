@@ -63,6 +63,8 @@
 
             if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'])
                 echo '<a href="admin.php"><button type="button" class="btn btn-sm">Admin Page</button></a>';
+            else if (!isset($_SESSION['worker_id']) && isset($_SESSION['user_id']))
+                echo '<a href="application.php"><button type="button" class="btn btn-sm">Apply to be a Worker</button></a>';
 
             echo '</div>';
 
@@ -85,7 +87,7 @@
             <h3 class="card-title text-center">Search for Workers</h3>
             <div class="row">
                 <div class="col-sm">
-                    <input type="text" class="form-control" placeholder="Enter skills here" id='query'>
+                    <input type="text" class="form-control" placeholder="Enter skills here (space delimited)" id='query'>
                 </div>
                 <div class="col-sm pl-5">
                     <button onclick="search()" class="btn">Submit</button>
