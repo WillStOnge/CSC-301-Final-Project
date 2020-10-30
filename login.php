@@ -36,7 +36,8 @@ if (isset($_POST['email']) && isset($_POST['password']))
 
                 $_SESSION["user_id"] = $user->user_id;
                 $_SESSION["user_name"] = $user->name;
-                $_SESSION["worker_id"] = $worker[0]["worker_id"];
+                if ($worker !== false)
+                    $_SESSION["worker_id"] = $worker[0]["worker_id"];
                 $_SESSION["is_admin"] = $user->is_admin;
 
                 header('location: index.php');

@@ -57,21 +57,10 @@
             echo '<div class="row">';
 
             echo '<div class="col-sm-6 align-text-top pt-5"><a href="index.php"><button type="button" class="btn btn-sm">Home</button></a></div>';
-
-            if (isset($_SESSION['user_id']))
-                echo '<div class="col-sm-6 text-right pt-5">
-                        <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
-                        <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
-                    </div>';
-            else
-            {
-                echo '<div class="col-sm-6 text-right pt-5">
-                        <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
-                        <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
-                    </div>';
-                die('<p>Must be signed in to perform this action</p>');
-            }
-
+            echo '<div class="col-sm-6 text-right pt-5">
+                    <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
+                    <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
+                </div>';
             echo '</div>';
 
             if (!isset($_GET['id']))
@@ -124,20 +113,28 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="text-right pt-5">
-                        <a href="mailto:<?php echo $user->email; ?>"><button type="button"
-                                class="btn btn-sm">Email</button></a>
-                        <a href="tel:<?php echo $user->phone; ?>"><button type="button"
-                                class="btn btn-sm">Call</button></a>
                         <?php
                         if ($_SESSION['worker_id'] == $worker->worker_id)
-                            echo '<a href="workerEdit.php"><button type="button" class="btn btn-sm">Edit Profile</button></a>';
+                        {
+                            echo '<a href="workerEdit.php"><button type="button" class="btn btn-sm mr-5">Edit Profile</button></a>';
+                            echo '<a href="skills.php"><button type="button" class="btn btn-sm">Edit Skills</button></a>';
+                        }
+                        else
+                        {
+                            echo '<a href="mailto:' . $user->email . '"><button type="button" class="btn btn-sm mr-5">Email</button></a>';
+                            echo '<a href="tel:' . $user->phone . '"><button type="button" class="btn btn-sm">Call</button></a>';
+                        }
                         ?>
+                        
                     </div>
                 </div>
             </div>
         </div>
         <h3 class="card-title text-center">Reviews</h3>
-        <a href="addReview.php?id=<?php echo $worker->worker_id; ?>"><button type="button"class="btn btn-sm">New Review</button></a>
+        <?php
+        if ($_SESSION['worker_id'] != $worker->worker_id)
+            echo '<a href="addReview.php?id=' . $worker->worker_id . '"><button type="button"class="btn btn-sm">New Review</button></a>';
+        ?>
         <div id="reviews" class="row">
             <script>
             getReviews(<?php echo $worker->worker_id; ?>)
