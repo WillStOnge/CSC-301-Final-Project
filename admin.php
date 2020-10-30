@@ -74,6 +74,24 @@ session_start();
         }
     }
 
+    function deleteUser() {
+        var user_id = document.getElementById('user_id').innerHTML;
+
+        if (user_id.length == 0)
+            return;
+        else {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var email = document.getElementById('email').value
+                    updateUser(email)
+                }
+            };
+            request.open("POST", "api/deleteUser.php?user_id=" + user_id, true);
+            request.send();
+        }
+    }
+
     function updateWorkers() {
         var request = new XMLHttpRequest();
 
@@ -233,7 +251,7 @@ session_start();
                     <h3 class="card-title text-center">User Administration</h3>
                     <div class="form-group" action="">
                         <label>User Email</label>
-                        <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)">
+                        <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)" id="email">
                     </div>
                     <div id="userData">
                         <table class="table table-hover table-inner-bordered">
@@ -277,6 +295,7 @@ session_start();
                     <div class="text-center">
                         <button type="button" class="btn btn-sm" onclick="admin()">Toggle Admin</button>
                         <button type="button" class="btn btn-sm btn-red" onclick="ban()">Toggle Ban</button>
+                        <button type="button" class="btn btn-sm" onclick="deleteUser()">Delete User</button>
                     </div>
                 </div>
             </div>
