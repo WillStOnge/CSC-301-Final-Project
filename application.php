@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['worker_id']))
+if (isset($_SESSION['worker_id']))
     header('location: index.php');
 
 if (isset($_POST['description']) && isset($_POST['location']) && isset($_POST['cert']))
@@ -14,7 +14,9 @@ if (isset($_POST['description']) && isset($_POST['location']) && isset($_POST['c
         // TODO: Setup file handling for certification
 
         $worker = Worker::create($_SESSION['user_id'], $_POST['description'], $_POST['location']);
-        //Certification::create($worker->worker_id, $_POST['cert']);
+        Certification::create($worker->worker_id, $_POST['cert']);
+
+        $_SESSION['worker_id'] = $worker->worker_id;
 
         header("location: index.php");
     }
