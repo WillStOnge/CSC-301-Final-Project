@@ -12,19 +12,25 @@
         <?php
             session_start();
 
+            echo '<div class="row">';
+
+            echo '<div class="col-sm-6 align-text-top pt-5"><a href="index.php"><button type="button" class="btn btn-sm">Home</button></a></div>';
+
             if (isset($_SESSION['user_id']))
-                echo '<div class="text-right pt-5">
+                echo '<div class="text-right col-sm-6 pt-5">
                         <small class="align-text-top">Welcome back, ' . str_replace("%\n%", '', $_SESSION['user_name']) . '</small>
                         <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
                     </div>';
             else
             {
-                echo '<div class="text-right pt-5">
+                echo '<div class="text-right col-sm-6  pt-5">
                         <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                         <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                     </div>';
                 die('<p>Must be signed into perform this action</p>');
             }
+
+            echo '</div>';
 
             include_once "objects/worker.php";
             include_once "objects/user.php";
