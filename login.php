@@ -76,13 +76,10 @@ if (isset($_POST['email']) && isset($_POST['password']))
                     <a href="logout.php"><button type="button" class="btn btn-sm">Logout</button></a>
                 </div>';
         else
-        {
             echo '<div class="col-sm-6 text-right pt-5">
                     <a href="login.php"><button type="button" class="btn btn-sm">Login</button></a>
                     <a href="register.php"><button type="button" class="btn btn-sm">Register</button></a>
                 </div>';
-            die('<p>Must be signed in to perform this action</p>');
-        }
 
         echo '</div>';
         ?>
