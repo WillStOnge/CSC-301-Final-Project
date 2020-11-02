@@ -9,7 +9,7 @@ class Database
 
         try
         {
-            $this->conn = new PDO("mysql:host=" . Config::$host . ";dbname=" . Config::$name, Config::$username);
+            $this->conn = new PDO("mysql:host=" . Config::$host . ";dbname=" . Config::$name, Config::$username, Config::$password);
             $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

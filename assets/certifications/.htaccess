@@ -1,8 +1,0 @@
-#Mixed Settings
-#Disable access to .htaccess file
-<Files .htaccess>
-order allow,deny
-deny from all
-</Files>
-#Disable Directory listing (indexes)
-Options All -Indexes
