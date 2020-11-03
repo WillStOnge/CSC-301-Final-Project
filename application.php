@@ -4,21 +4,31 @@ session_start();
 if (isset($_SESSION['worker_id']))
     header('location: index.php');
 
-if (isset($_POST['description']) && isset($_POST['location']) && isset($_POST['cert']))
+if (isset($_POST['description']) && isset($_POST['location']) && isset($_FILES['cert']))
 {
     if (strlen($_POST['description']) <= 2048)
     {
         include_once "objects/worker.php";
         include_once "objects/certification.php";
 
-        // TODO: Setup file handling for certification
-
         $worker = Worker::create($_SESSION['user_id'], $_POST['description'], $_POST['location']);
-        Certification::create($worker->worker_id, $_POST['cert']);
 
-        $_SESSION['worker_id'] = $worker->worker_id;
+        $dir = "assets/certifications/" . $worker->worker_id;
+        $filename = $_FILES['cert']['name'];
 
-        header("location: index.php");
+        mkdir($dir);
+
+        if (move_uploaded_file($_FILES["cert"]["tmp_name"], $dir . "/" . $filename)) 
+        {
+            Certification::create($worker->worker_id, $filename);
+
+            $_SESSION['worker_id'] = $worker->worker_id;
+
+            header("location: index.php");
+        }
+        else
+            echo "<p>Error: File upload failed.</p>";
+
     }
     else
         echo "<p>Description is too long.</p>";
@@ -54,14 +64,14 @@ if (isset($_POST['description']) && isset($_POST['location']) && isset($_POST['c
         echo '</div>';
         ?>
         <h1>Worker Application</h1>
-        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post">
+        <form action="<?php $_SERVER["PHP_SELF"] ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Location</label>
                 <input type="text" class="form-control" name="location" required>
                 <label>Description</label>
                 <textarea class="form-control" name="description" placeholder="Write your profile description here. This will be visible to everyone. (Max 2048 characters)" maxlength="2048" required></textarea>
                 <label>Applicable Certification</label>
-                <input type="file" class="form-control" name="cert" required>
+                <input type="file" class="form-control" name="cert" required/>
             </div>
             <button type="submit" class="btn">Submit</button>
         </form>
