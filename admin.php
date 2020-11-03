@@ -129,7 +129,7 @@ session_start();
 
                     var dataDoc = document.createElement('td')
                     var anchor = document.createElement('a')
-                    anchor.setAttribute('href', 'assets/certifications/' + worker.file_name)
+                    anchor.setAttribute('href', 'assets/certifications/' + worker.worker_id + '/' + worker.file_name)
                     anchor.setAttribute('target', 'about:blank')
                     anchor.innerText = worker.file_name
 
