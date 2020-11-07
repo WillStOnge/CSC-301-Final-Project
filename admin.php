@@ -21,6 +21,8 @@ session_start();
 
                     var join_date = new Date(response.join_date * 1000)
 
+                    console.log(response);
+
                     document.getElementById("user_id").innerHTML = response.user_id;
                     document.getElementById("name").innerHTML = response.name;
                     document.getElementById("email").innerHTML = response.email;
@@ -251,7 +253,7 @@ session_start();
                     <h3 class="card-title text-center">User Administration</h3>
                     <div class="form-group" action="">
                         <label>User Email</label>
-                        <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)" id="email">
+                        <input type="email" class="form-control" name="name" onkeyup="updateUser(this.value)">
                     </div>
                     <div id="userData">
                         <table class="table table-hover table-inner-bordered">
