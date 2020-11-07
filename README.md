@@ -11,3 +11,5 @@
 3. Navigate to the install directory in your web browser.
 4. Click the login button at the top right.
 5. Enter `test@test.com` for the username and `123` for the password.
+
+Not the best PHP code, but ¯\_(ツ)_/¯
