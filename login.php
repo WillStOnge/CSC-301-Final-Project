@@ -31,7 +31,7 @@ if (isset($_POST['email']) && isset($_POST['password']))
                 {
                     $db->conn->rollBack();
                     http_response_code(500);
-                    die('Error 500');
+                    die('[]');
                 }
 
                 $_SESSION["user_id"] = $user->user_id;

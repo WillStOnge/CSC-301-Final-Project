@@ -106,7 +106,7 @@
                     {
                         $db->conn->rollBack();
                         http_response_code(500);
-                        die('Error 500');
+                        die('[]');
                     }
 
                     $str = "";

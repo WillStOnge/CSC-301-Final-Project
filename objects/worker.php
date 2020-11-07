@@ -31,7 +31,7 @@ class Worker extends IObject
         {
             $worker->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         return $worker->read($worker_id);
@@ -89,7 +89,7 @@ class Worker extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 
@@ -108,7 +108,7 @@ class Worker extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 }

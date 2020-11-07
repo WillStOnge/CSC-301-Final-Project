@@ -12,14 +12,14 @@ session_start();
 if (!isset($_GET['worker_id']))
 {
     http_response_code(400);
-    die(json_encode(["message" => "No worker specified"]));
+    die('[]');
 }
 
 if (!isset($_SESSION['user_id']))
 {
     echo json_encode(['message' => 'You must be logged in to use this page.']);
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") 
@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500');
+        die('[]');
     }
 
     foreach ($reviewInfo as &$review)

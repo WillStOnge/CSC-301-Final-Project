@@ -61,7 +61,7 @@ class Review extends IObject
         {
             $review->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         $review->review_id = $record['review_id'];
@@ -93,7 +93,7 @@ class Review extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 
@@ -112,7 +112,7 @@ class Review extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 }

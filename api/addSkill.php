@@ -12,23 +12,20 @@ session_start();
 if (!isset($_GET['worker_id']) || !isset($_GET['skill']))
 {
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if (!isset($_SESSION['worker_id']))
 {
     echo json_encode(['message' => 'You must be logged in as a worker to use this page.']);
-    http_response_code(401);
-    die();
+    http_response_code(400);
+    die('[]');
 }
-else
+else if ($_SESSION['worker_id'] != $_GET['worker_id'])
 {
-    if ($_SESSION['worker_id'] != $_GET['worker_id'])
-    {
-        echo json_encode(['message' => 'You must be logged in as a worker to use this page.']);
-        http_response_code(402);
-        die();
-    }
+    echo json_encode(['message' => 'You must be logged in as a worker to use this page.']);
+    http_response_code(400);
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -48,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500');
+        die('[]');
     }
 }
 ?>

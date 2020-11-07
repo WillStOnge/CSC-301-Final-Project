@@ -28,7 +28,7 @@ class Skill extends IObject
         {
             $skill->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         return $skill->read($skill_id);
@@ -56,7 +56,7 @@ class Skill extends IObject
         {
             $skill->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         $skill->skill_id = $record["skill_id"];
@@ -83,7 +83,7 @@ class Skill extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 
@@ -102,7 +102,7 @@ class Skill extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 }

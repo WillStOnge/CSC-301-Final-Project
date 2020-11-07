@@ -13,14 +13,14 @@ session_start();
 if (!isset($_GET['worker_id']))
 {
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if (!isset($_SESSION['user_id']) || !(isset($_SESSION['is_admin']) && $_SESSION['is_admin']))
 {
     echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
-    http_response_code(401);
-    die();
+    http_response_code(400);
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500');
+        die('[]');
     }
 }
 ?>

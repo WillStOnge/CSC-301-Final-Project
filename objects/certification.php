@@ -28,7 +28,7 @@ class Certification extends IObject
         {
             $certification->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         return $certification->read($certification_id);
@@ -56,7 +56,7 @@ class Certification extends IObject
         {
             $certification->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         $certification->certification_id = $record["certification_id"];
@@ -83,7 +83,7 @@ class Certification extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 
@@ -102,7 +102,7 @@ class Certification extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 }

@@ -13,7 +13,7 @@ session_start();
 if (!isset($_GET['query']))
 {
     http_response_code(400);
-    die(json_encode(["message" => "No query specified"]));
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500' . $e);
+        die('[]');
     }
 
     foreach ($workers as &$worker)

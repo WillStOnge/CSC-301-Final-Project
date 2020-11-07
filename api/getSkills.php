@@ -11,7 +11,7 @@ include_once "../objects/user.php";
 if (!isset($_GET['worker_id']))
 {
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 session_start();
@@ -20,7 +20,7 @@ if (!isset($_SESSION['user_id']))
 {
     echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
     http_response_code(400);
-    die();
+    die('[]');
 }
 else
 {
@@ -29,7 +29,7 @@ else
     {
         echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
         http_response_code(400);
-        die();
+        die('[]');
     }
         
 }
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500');
+        die('[]');
     }
 
     foreach ($skills as &$skill)

@@ -12,14 +12,14 @@ session_start();
 if (!isset($_GET['email']))
 {
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if (!isset($_SESSION['user_id']) || !(isset($_SESSION['is_admin']) && $_SESSION['is_admin']))
 {
     echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") 

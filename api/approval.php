@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id']) || !(isset($_SESSION['is_admin']) && $_SESSION[
 {
     echo json_encode(['message' => 'You must be logged in as an admin to use this page.']);
     http_response_code(400);
-    die();
+    die('[]');
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") 
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     {
         $db->conn->rollBack();
         http_response_code(500);
-        die('Error 500');
+        die('[]');
     }
 
     foreach ($workerInfo as &$worker)

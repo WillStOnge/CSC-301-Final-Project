@@ -36,7 +36,7 @@ class User extends IObject
         {
             $user->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         return $user->read($user_id);
@@ -64,7 +64,7 @@ class User extends IObject
         {
             $user->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         $user->user_id = $record["user_id"];
@@ -102,7 +102,7 @@ class User extends IObject
         {
             $user->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
 
         $user->user_id = $record["user_id"];
@@ -140,7 +140,7 @@ class User extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 
@@ -159,7 +159,7 @@ class User extends IObject
         {
             $this->conn->rollBack();
             http_response_code(500);
-            die('Error 500');
+            die('[]');
         }
     }
 }
